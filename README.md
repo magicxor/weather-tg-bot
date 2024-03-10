@@ -2,7 +2,7 @@
 
 Inline weather bot
 
-[demo](https://github.com/magicxor/weather-tg-bot/assets/8275793/0ed70c5d-1908-470e-a307-0b534466ba14)
+[Demo](https://github.com/magicxor/weather-tg-bot/assets/8275793/2910b994-d2ef-45b3-bfa8-d3e7df3b916e)
 
 ## Docker
 
