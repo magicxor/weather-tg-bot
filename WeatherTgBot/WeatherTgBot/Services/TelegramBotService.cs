@@ -62,7 +62,7 @@ public class TelegramBotService
                         new InputTextMessageContent(cf.GetCityForecastString())))
                     .ToList();
 
-                await botClient.AnswerInlineQueryAsync(inlineQuery.Id, inlineResults, 0, false, cancellationToken: cancellationToken);
+                await botClient.AnswerInlineQueryAsync(inlineQuery.Id, inlineResults, 3600, false, cancellationToken: cancellationToken);
                 _logger.LogInformation("Inline query answered. Sent {Count} results", inlineResults.Count);
             }
         }
