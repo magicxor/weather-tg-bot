@@ -2,6 +2,8 @@
 
 Inline weather bot
 
+[demo](https://github.com/magicxor/weather-tg-bot/assets/8275793/0ed70c5d-1908-470e-a307-0b534466ba14)
+
 ## Docker
 
 ```powershell
