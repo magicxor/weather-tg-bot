@@ -11,11 +11,11 @@ public class Daily
 
     [JsonProperty("temperature_2m_max")]
     [JsonPropertyName("temperature_2m_max")]
-    public List<double>? Temperature2mMax { get; set; }
+    public List<double>? Temperature2MMax { get; set; }
 
     [JsonProperty("temperature_2m_min")]
     [JsonPropertyName("temperature_2m_min")]
-    public List<double>? Temperature2mMin { get; set; }
+    public List<double>? Temperature2MMin { get; set; }
 
     [JsonProperty("precipitation_sum")]
     [JsonPropertyName("precipitation_sum")]
