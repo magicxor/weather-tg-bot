@@ -32,7 +32,7 @@ public static class CityForecastExtensions
             return string.Empty;
         }
 
-        var temperatureString = temperature.Value.ToString("N2", CultureInfo.InvariantCulture);
+        var temperatureString = temperature.Value.ToString("0.#", CultureInfo.InvariantCulture);
 
         if (temperature > 0)
         {
