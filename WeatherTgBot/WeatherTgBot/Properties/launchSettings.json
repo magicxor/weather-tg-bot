@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "WeatherTgBot": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
