@@ -55,9 +55,12 @@ public class WeatherProvider
         }
 
         var cities = _cities
-            .Where(s => s.Name?.Contains(substring, StringComparison.InvariantCultureIgnoreCase) == true
-                        || s.AsciiName?.Contains(substring, StringComparison.InvariantCultureIgnoreCase) == true
-                        || s.AlternateNames?.Contains(substring, StringComparison.InvariantCultureIgnoreCase) == true)
+            .Where(city => city.Name?.Contains(substring, StringComparison.InvariantCultureIgnoreCase) == true
+                        || city.AsciiName?.Contains(substring, StringComparison.InvariantCultureIgnoreCase) == true
+                        || city.AlternateNames?.Contains(substring, StringComparison.InvariantCultureIgnoreCase) == true)
+            .OrderByDescending(city => city.Name?.StartsWith(substring, StringComparison.InvariantCultureIgnoreCase) == true)
+            .ThenByDescending(city => city.Population)
+            .DistinctBy(city => city.Coordinates)
             .Take(limit)
             .ToList();
 
