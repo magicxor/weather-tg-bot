@@ -67,7 +67,10 @@ public static class CityForecastExtensions
     {
         var weatherString = cityForecast.Forecast == null
             ? "N/A"
-            : $"{cityForecast.Forecast.GetSkyIcon()}{cityForecast.Forecast.GetTemperature()} ({cityForecast.Forecast.GetWind()})";
+            : $"""
+               {cityForecast.Forecast.GetSkyIcon()}{cityForecast.Forecast.GetTemperature()}
+               {cityForecast.Forecast.GetWind()}
+               """;
 
         return $"""
                 {cityForecast.City.GetInfo()}
