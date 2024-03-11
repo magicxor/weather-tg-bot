@@ -1,6 +1,6 @@
 # weather-tg-bot
 
-Inline weather bot
+Inline Telegram weather bot
 
 [Demo](https://github.com/magicxor/weather-tg-bot/assets/8275793/2910b994-d2ef-45b3-bfa8-d3e7df3b916e)
 
