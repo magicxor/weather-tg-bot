@@ -54,7 +54,7 @@ public sealed class TelegramBotService
                     inlineQuery.Query.Length,
                     inlineQuery.Query);
 
-                var cities = await _weatherProvider.GetWeatherInCitiesAsync(inlineQuery.Query, 10, cancellationToken);
+                var cities = await _weatherProvider.GetWeatherInCitiesAsync(inlineQuery.Query.Trim(), 10, cancellationToken);
                 var inlineResults = cities
                     .Select((cf, i) => new InlineQueryResultArticle(
                         $"{i}_{cf.City.Coordinates}_{DateTime.UtcNow.ToString("yyyy-MM-dd_HH", CultureInfo.InvariantCulture)}",
