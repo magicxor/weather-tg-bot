@@ -2,7 +2,7 @@
 
 namespace WeatherTgBot.Models;
 
-public class WeatherTgBotOptions
+public sealed class WeatherTgBotOptions
 {
     [Required]
     [RegularExpression(@".*:.*")]

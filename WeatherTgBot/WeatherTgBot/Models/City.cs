@@ -4,7 +4,7 @@ namespace WeatherTgBot.Models;
 
 [Delimiter(";")]
 [CultureInfo("InvariantCulture")]
-public class City
+public sealed class City
 {
     [Name("Name")]
     [Optional]

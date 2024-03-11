@@ -11,8 +11,10 @@ using WeatherTgBot.Models;
 
 namespace WeatherTgBot.Services;
 
-public class WeatherProvider
+public sealed class WeatherProvider : IDisposable
 {
+    private readonly SemaphoreSlim _semaphoreSlim = new(1, 1);
+
     private readonly IOptions<WeatherTgBotOptions> _options;
     private readonly ILogger<WeatherProvider> _logger;
 
@@ -28,21 +30,30 @@ public class WeatherProvider
 
     private void Initialize()
     {
-        if (_initialized)
-            return;
+        _semaphoreSlim.Wait();
 
-        // see https://public.opendatasoft.com/explore/dataset/geonames-all-cities-with-a-population-1000/export/?disjunctive.cou_name_en&sort=name
-        var config = CsvConfiguration.FromAttributes<City>();
-        using (var reader = new StreamReader("geonames-all-cities-with-a-population-1000.csv"))
-        using (var csv = new CsvReader(reader, config))
+        try
         {
-            var data = csv.GetRecords<City>().ToList();
-            _cities.AddRange(data
-                .OrderByDescending(x => x.Population)
-            );
-        }
+            if (_initialized)
+                return;
 
-        _initialized = true;
+            // see https://public.opendatasoft.com/explore/dataset/geonames-all-cities-with-a-population-1000/export/?disjunctive.cou_name_en&sort=name
+            var config = CsvConfiguration.FromAttributes<City>();
+            using (var reader = new StreamReader("geonames-all-cities-with-a-population-1000.csv"))
+            using (var csv = new CsvReader(reader, config))
+            {
+                var data = csv.GetRecords<City>().ToList();
+                _cities.AddRange(data
+                    .OrderByDescending(x => x.Population)
+                );
+            }
+
+            _initialized = true;
+        }
+        finally
+        {
+            _semaphoreSlim.Release();
+        }
     }
 
     public async Task<IReadOnlyList<CityForecast>> GetWeatherInCitiesAsync(string substring, int limit = 10, CancellationToken cancellationToken = default)
@@ -94,5 +105,10 @@ public class WeatherProvider
                 Forecast = forecasts[i],
             })
             .ToList();
+    }
+
+    public void Dispose()
+    {
+        _semaphoreSlim.Dispose();
     }
 }

@@ -10,7 +10,7 @@ using WeatherTgBot.Extensions;
 
 namespace WeatherTgBot.Services;
 
-public class TelegramBotService
+public sealed class TelegramBotService
 {
     private static readonly ReceiverOptions ReceiverOptions = new()
     {

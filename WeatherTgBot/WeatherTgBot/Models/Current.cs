@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace WeatherTgBot.Models;
 
-public class Current
+public sealed class Current
 {
     [JsonProperty("time")]
     [JsonPropertyName("time")]

@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace WeatherTgBot.Models;
 
-public class Forecast
+public sealed class Forecast
 {
     [JsonProperty("latitude")]
     [JsonPropertyName("latitude")]

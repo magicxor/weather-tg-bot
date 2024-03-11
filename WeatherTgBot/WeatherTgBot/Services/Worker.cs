@@ -3,7 +3,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace WeatherTgBot.Services;
 
-public class Worker : BackgroundService
+public sealed class Worker : BackgroundService
 {
     private readonly IServiceScopeFactory _serviceScopeFactory;
     private TelegramBotService? _telegramBotService;

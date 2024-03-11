@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace WeatherTgBot.Models;
 
-public class Daily
+public sealed class Daily
 {
     [JsonProperty("time")]
     [JsonPropertyName("time")]
