@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Refit;
 using WeatherTgBot.Abstractions;
+using WeatherTgBot.Enums;
 using WeatherTgBot.Extensions;
 using WeatherTgBot.Models;
 
@@ -17,15 +18,18 @@ public sealed class WeatherProvider : IDisposable
 
     private readonly IOptions<WeatherTgBotOptions> _options;
     private readonly ILogger<WeatherProvider> _logger;
+    private readonly IHttpClientFactory _httpClientFactory;
 
     private readonly List<City> _cities = [];
     private bool _initialized;
 
     public WeatherProvider(IOptions<WeatherTgBotOptions> options,
-        ILogger<WeatherProvider> logger)
+        ILogger<WeatherProvider> logger,
+        IHttpClientFactory httpClientFactory)
     {
         _options = options;
         _logger = logger;
+        _httpClientFactory = httpClientFactory;
     }
 
     private void Initialize()
@@ -84,7 +88,9 @@ public sealed class WeatherProvider : IDisposable
         var longitudes = string.Join(',', cities.Select(c => c.GetLongitude()));
         var timezones = string.Join(',', cities.Select(c => c.Timezone));
 
-        var api = RestService.For<IOpenMeteoApi>(_options.Value.OpenMeteoApiUrl);
+        var httpClient = _httpClientFactory.CreateClient(nameof(HttpClientTypes.ExternalContent));
+        httpClient.BaseAddress = new Uri(_options.Value.OpenMeteoApiUrl);
+        var api = RestService.For<IOpenMeteoApi>(httpClient);
         var apiResponse = await api.GetWeatherAsync(latitudes, longitudes, timezones, cancellationToken);
         using var apiResponseJson = JsonDocument.Parse(apiResponse);
 
