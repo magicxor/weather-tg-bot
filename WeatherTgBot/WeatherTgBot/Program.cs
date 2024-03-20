@@ -5,9 +5,6 @@ using Microsoft.Extensions.Logging;
 using NLog;
 using NLog.Config;
 using NLog.Extensions.Logging;
-using Polly;
-using Polly.Contrib.WaitAndRetry;
-using Polly.Extensions.Http;
 using WeatherTgBot.Enums;
 using WeatherTgBot.Exceptions;
 using WeatherTgBot.Extensions;
@@ -21,16 +18,6 @@ namespace WeatherTgBot;
 public static class Program
 {
     private static readonly LoggingConfiguration LoggingConfiguration = new XmlLoggingConfiguration("nlog.config");
-
-    private static readonly IEnumerable<TimeSpan> TelegramDelay = Backoff.DecorrelatedJitterBackoffV2(medianFirstRetryDelay: TimeSpan.FromSeconds(0.3), retryCount: 3);
-    private static readonly IAsyncPolicy<HttpResponseMessage> TelegramRetryPolicy = HttpPolicyExtensions
-        .HandleTransientHttpError()
-        .WaitAndRetryAsync(TelegramDelay);
-
-    private static readonly IEnumerable<TimeSpan> ExternalContentDelay = Backoff.DecorrelatedJitterBackoffV2(medianFirstRetryDelay: TimeSpan.FromSeconds(0.1), retryCount: 3);
-    private static readonly IAsyncPolicy<HttpResponseMessage> ExternalContentRetryPolicy = HttpPolicyExtensions
-        .HandleTransientHttpError()
-        .WaitAndRetryAsync(ExternalContentDelay);
 
     public static void Main(string[] args)
     {
@@ -60,11 +47,11 @@ public static class Program
                         .ValidateOnStart();
 
                     services.AddHttpClient(nameof(HttpClientTypes.Telegram))
-                        .AddPolicyHandler(TelegramRetryPolicy)
+                        .AddPolicyHandler(HttpPolicyProvider.TelegramCombinedPolicy)
                         .AddDefaultLogger();
 
-                    services.AddHttpClient(nameof(HttpClientTypes.ExternalContent))
-                        .AddPolicyHandler(ExternalContentRetryPolicy)
+                    services.AddHttpClient(nameof(HttpClientTypes.WeatherApi))
+                        .AddPolicyHandler(HttpPolicyProvider.WeatherApiCombinedPolicy)
                         .AddDefaultLogger();
 
                     var telegramBotApiKey = hostContext.Configuration.GetTelegramBotApiKey()

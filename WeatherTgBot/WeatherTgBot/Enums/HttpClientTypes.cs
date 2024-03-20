@@ -3,5 +3,5 @@
 public enum HttpClientTypes
 {
     Telegram,
-    ExternalContent,
+    WeatherApi,
 }

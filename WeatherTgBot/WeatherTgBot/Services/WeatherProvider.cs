@@ -88,7 +88,7 @@ public sealed class WeatherProvider : IDisposable
         var longitudes = string.Join(',', cities.Select(c => c.GetLongitude()));
         var timezones = string.Join(',', cities.Select(c => c.Timezone));
 
-        var httpClient = _httpClientFactory.CreateClient(nameof(HttpClientTypes.ExternalContent));
+        var httpClient = _httpClientFactory.CreateClient(nameof(HttpClientTypes.WeatherApi));
         httpClient.BaseAddress = new Uri(_options.Value.OpenMeteoApiUrl);
         var api = RestService.For<IOpenMeteoApi>(httpClient);
         var apiResponse = await api.GetWeatherAsync(latitudes, longitudes, timezones, cancellationToken);
