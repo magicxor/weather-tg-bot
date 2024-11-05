@@ -22,6 +22,10 @@ public sealed class City
     [Optional]
     public string? CountryName { get; set; }
 
+    [Name("Admin1 Code")]
+    [Optional]
+    public string? Admin1Code { get; set; }
+
     [Name("Population")]
     [Optional]
     public int Population { get; set; }

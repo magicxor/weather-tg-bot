@@ -96,7 +96,7 @@ public sealed class WeatherProvider : IDisposable
 
         var forecasts = apiResponseJson.RootElement.ValueKind == JsonValueKind.Array
             ? JsonSerializer.Deserialize<List<Forecast?>>(apiResponse)
-            : new List<Forecast?> { JsonSerializer.Deserialize<Forecast>(apiResponse) };
+            : [JsonSerializer.Deserialize<Forecast>(apiResponse)];
 
         if (forecasts?.Count != cities.Count)
         {

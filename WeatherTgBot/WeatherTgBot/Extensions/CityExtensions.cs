@@ -6,6 +6,15 @@ namespace WeatherTgBot.Extensions;
 
 public static class CityExtensions
 {
+    public static string? GetCountryNameWithState(this City city)
+    {
+        return city.CountryName == "United States"
+            ? string.IsNullOrEmpty(city.Admin1Code)
+                ? city.CountryName
+                : $"{city.CountryName}, {city.Admin1Code}"
+            : city.CountryName;
+    }
+
     public static string GetInfo(this City city)
     {
         var population = $"{city.Population.ToString("N0", CultureInfo.InvariantCulture)}";
@@ -32,7 +41,7 @@ public static class CityExtensions
                 .ConvertTime(DateTimeOffset.UtcNow, tzInfo)
                 .ToString("HH:mm (yyyy-MM-dd)", CultureInfo.InvariantCulture);
         var result = $"""
-                      📍{city.Name}, {city.CountryName}
+                      📍{city.Name}, {GetCountryNameWithState(city)}
                       👤{population}
                       🕑{timestamp}
                       """;

@@ -82,7 +82,7 @@ public static class CityForecastExtensions
     {
         var city = cityForecast.City;
         var population = $"{city.Population.ToString("N0", CultureInfo.InvariantCulture)}";
-        var result = $"{city.Name}, {city.CountryName} 👤{population} {cityForecast.Forecast?.GetSkyIcon()} {cityForecast.Forecast?.GetTemperature()}".Trim();
+        var result = $"{city.Name}, {city.GetCountryNameWithState()} 👤{population} {cityForecast.Forecast?.GetSkyIcon()} {cityForecast.Forecast?.GetTemperature()}".Trim();
         return result;
     }
 }
