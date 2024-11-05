@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 using Microsoft.Extensions.Logging;
 using Telegram.Bot;
 using Telegram.Bot.Exceptions;
@@ -62,7 +62,7 @@ public sealed class TelegramBotService
                         new InputTextMessageContent(cf.GetCityForecastString())))
                     .ToList();
 
-                await botClient.AnswerInlineQueryAsync(inlineQuery.Id, inlineResults, 3600, false, cancellationToken: cancellationToken);
+                await botClient.AnswerInlineQuery(inlineQuery.Id, inlineResults, 3600, false, cancellationToken: cancellationToken);
                 _logger.LogInformation("Inline query answered. Sent {Count} results", inlineResults.Count);
             }
         }
@@ -96,7 +96,7 @@ public sealed class TelegramBotService
     {
         _telegramBotClient.StartReceiving(
             updateHandler: HandleUpdateAsync,
-            pollingErrorHandler: HandlePollingErrorAsync,
+            errorHandler: HandlePollingErrorAsync,
             receiverOptions: ReceiverOptions,
             cancellationToken: cancellationToken
         );
