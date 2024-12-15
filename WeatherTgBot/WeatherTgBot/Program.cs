@@ -48,11 +48,15 @@ public static class Program
                         .ValidateDataAnnotations()
                         .ValidateOnStart();
 
-                    services.AddHttpClient(nameof(HttpClientTypes.Telegram))
+                    services.AddHttpClient(
+                            nameof(HttpClientTypes.Telegram),
+                            client => client.Timeout = HttpPolicyProvider.RequestTimeout)
                         .AddPolicyHandler(HttpPolicyProvider.TelegramCombinedPolicy)
                         .AddDefaultLogger();
 
-                    services.AddHttpClient(nameof(HttpClientTypes.WeatherApi))
+                    services.AddHttpClient(
+                            nameof(HttpClientTypes.WeatherApi),
+                            client => client.Timeout = HttpPolicyProvider.RequestTimeout)
                         .AddPolicyHandler(HttpPolicyProvider.WeatherApiCombinedPolicy)
                         .AddDefaultLogger();
 
