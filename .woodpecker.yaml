@@ -6,7 +6,7 @@ steps:
       SOLUTION_DIR: WeatherTgBot
       PROJECT_DIR: WeatherTgBot
       PROJECT_IMAGE_NAME: weather-tg-bot
-      NAS_DOCKER_HOST:
+      DOCKER_HOST:
         from_secret: NAS_DOCKER_HOST
       NAS_CONTAINER_REGISTRY_HOST:
         from_secret: NAS_CONTAINER_REGISTRY_HOST
