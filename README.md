@@ -1,5 +1,7 @@
 # weather-tg-bot
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/magicxor/weather-tg-bot)
+
 Inline Telegram weather bot
 
 [Demo](https://github.com/magicxor/weather-tg-bot/assets/8275793/2910b994-d2ef-45b3-bfa8-d3e7df3b916e)
